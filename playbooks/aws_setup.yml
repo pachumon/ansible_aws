@@ -61,7 +61,7 @@
         var: ansibleVPC_IGW
 
     #creating igw for the inernet access for ec2 hosts
-    - name: create create routetable  for {{ public_subnet.subnet.id }}
+    - name: create routetable for {{ public_subnet.subnet.id }}
       ec2_vpc_route_table: 
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
@@ -74,7 +74,7 @@
           - "{{ public_subnet.subnet.id }}"
         routes:
           - dest: 0.0.0.0
-            gateway_id: "{{ ansibleVPC_IGW.gateway.id }}"
+            gateway_id: "{{ ansibleVPC_IGW.gateway_id }}"
       register: rt_ansibleVPC_PublicSubnet
 
     - name: display rt_ansibleVPC_PublicSubnet output
