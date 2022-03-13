@@ -11,7 +11,7 @@
   tasks:
     #creating vpc for the ec2 hosts
     - name: create vpc for hosts
-      amazon.aws.ec2_vpc_net:
+      ec2_vpc_net:
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
         region: "{{ aws_region }}"
@@ -28,7 +28,7 @@
 
     #creating subnets for the ec2 hosts
     - name: create subnet for {{ ansibleVPC.vpc.id }}
-      amazon.aws.ec2_vpc_subnet:
+      ec2_vpc_subnet:
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
         region: "{{ aws_region }}"
@@ -46,7 +46,7 @@
       
     #creating igw for the inernet access for ec2 hosts
     - name: create igw for {{ ansibleVPC.vpc.id }}
-      community.aws.ec2_vpc_igw: 
+      ec2_vpc_igw: 
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
         region: "{{ aws_region }}"
@@ -56,9 +56,33 @@
           Name: ansibleVPC_IGW
       register: ansibleVPC_IGW
 
-    - name: display ansibleVPC_IGW
+    - name: display ansibleVPC_IGW output
       debug:
         var: ansibleVPC_IGW
+
+    #creating igw for the inernet access for ec2 hosts
+    - name: create create routetable  for {{ public_subnet.subnet.id }}
+      ec2_vpc_route_table: 
+        aws_access_key: "{{ aws_id }}"
+        aws_secret_key: "{{ aws_key }}"
+        region: "{{ aws_region }}"
+        state: present
+        vpc_id: "{{ ansibleVPC.vpc.id }}"
+        tags:
+          Name: rt_ansibleVPC_PublicSubnet
+        subnets:
+          - "{{ public_subnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0
+            gateway_id: "{{ ansibleVPC_IGW.gateway.id }}"
+      register: rt_ansibleVPC_PublicSubnet
+
+    - name: display rt_ansibleVPC_PublicSubnet output
+      debug:
+        var: rt_ansibleVPC_PublicSubnet
+
+
+    
 
 
 
