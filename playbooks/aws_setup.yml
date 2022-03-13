@@ -27,7 +27,7 @@
         var: ansibleVPC
 
     #creating subnets for the ec2 hosts
-    - name: create igw for {{ ansibleVPC.vpc.id }}
+    - name: create subnet for {{ ansibleVPC.vpc.id }}
       amazon.aws.ec2_vpc_subnet:
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
@@ -45,8 +45,8 @@
         var: public_subnet
       
     #creating igw for the inernet access for ec2 hosts
-    - name: create IGW for {{ ansibleVPC.vpc.id }}
-      amazon.aws.ec2_vpc_igw: 
+    - name: create igw for {{ ansibleVPC.vpc.id }}
+      community.aws.ec2_vpc_igw: 
         aws_access_key: "{{ aws_id }}"
         aws_secret_key: "{{ aws_key }}"
         region: "{{ aws_region }}"
