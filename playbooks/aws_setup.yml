@@ -23,7 +23,7 @@
 
     - name: display ansibleVPC output
       debug:
-        vars: ansibleVPC
+        var: ansibleVPC
          
         
 
