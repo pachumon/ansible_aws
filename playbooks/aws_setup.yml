@@ -1,11 +1,11 @@
 ---
 - name: playbook to prep networksetup for aws account
-  hosts: locahost
+  hosts: localhost
   remote_user: testuser
   gather_facts: false
 
   vars_files:
-    - vars/info.yml
+    - ../vars/info.yml
 
   tasks:
     
