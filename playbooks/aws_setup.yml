@@ -60,7 +60,7 @@
       debug:
         var: ansibleVPC_IGW
 
-    #creating igw for the inernet access for ec2 hosts
+    #creating route table for associating internet route to IGW
     - name: create routetable for {{ public_subnet.subnet.id }}
       ec2_vpc_route_table: 
         aws_access_key: "{{ aws_id }}"
@@ -80,6 +80,29 @@
     - name: display rt_ansibleVPC_PublicSubnet output
       debug:
         var: rt_ansibleVPC_PublicSubnet
+
+    #creating security groups for ssh access to ec2 hosts
+    - name: create security for ssh access
+      ec2_group: 
+        aws_access_key: "{{ aws_id }}"
+        aws_secret_key: "{{ aws_key }}"
+        region: "{{ aws_region }}"
+        name: "test security group"
+        description: "test security group"
+        vpc_id: "{{ ansibleVPC.vpc.id }}"
+        tags:
+          Name: rt_ansibleVPC_PublicSubnet
+        rules:
+          - proto: "tcp"
+            ports: "22"
+            cidr_ip: 0.0.0.0/0
+      register: my_vpc_sg
+
+    - name: display my_vpc_sg output
+      debug:
+        var: my_vpc_sg
+
+    
 
 
     
