@@ -43,6 +43,28 @@
     - name: display public_subnet output
       debug:
         var: public_subnet
+      
+    #creating igw for the inernet access for ec2 hosts
+    - name: create IGW for {{ ansibleVPC.vpc.id }}
+      amazon.aws.ec2_vpc_igw: 
+        aws_access_key: "{{ aws_id }}"
+        aws_secret_key: "{{ aws_key }}"
+        region: "{{ aws_region }}"
+        state: present
+        vpc_id: "{{ ansibleVPC.vpc.id }}"
+        tags:
+          Name: ansibleVPC_IGW
+      register: ansibleVPC_IGW
+
+    - name: display ansibleVPC_IGW
+      debug:
+        var: ansibleVPC_IGW
+
+
+
+
+
+    
 
 
          
