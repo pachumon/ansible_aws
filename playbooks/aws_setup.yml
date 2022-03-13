@@ -9,7 +9,7 @@
     - ../../info.yml
 
   tasks:
-    
+    #creating vpc for the ec2 hosts
     - name: create vpc for hosts
       amazon.aws.ec2_vpc_net:
         aws_access_key: "{{ aws_id }}"
@@ -25,6 +25,26 @@
     - name: display ansibleVPC output
       debug:
         var: ansibleVPC
+
+    #creating subnets for the ec2 hosts
+    - name: create igw for {{ ansibleVPC.vpc.id }}
+      amazon.aws.ec2_vpc_subnet:
+        aws_access_key: "{{ aws_id }}"
+        aws_secret_key: "{{ aws_key }}"
+        region: "{{ aws_region }}"
+        state: present
+        cidr: 10.0.0.0/16
+        vpc_id: "{{ ansibleVPC.vpc.id }}"
+        map_public: yes
+        tags:
+          Name: public_subnet
+      register: public_subnet
+
+    - name: display public_subnet output
+      debug:
+        var: public_subnet
+
+
          
         
 
