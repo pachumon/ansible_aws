@@ -9,6 +9,8 @@
     - ../../info.yml
 
   tasks:
+  ###### start VPC and network component setup ######
+
     #creating vpc for the ec2 hosts
     - name: create vpc for hosts
       ec2_vpc_net:
@@ -101,6 +103,28 @@
     - name: display my_vpc_sg output
       debug:
         var: my_vpc_sg
+
+  ###### end VPC and network component setup ######
+
+
+  ###### start EC2 Deployment ######
+
+    - name: find redhat amis
+      ec2_ami_info:
+        aws_access_key: "{{ aws_id }}"
+        aws_secret_key: "{{ aws_key }}"
+        region: "{{ aws_region }}"
+        owner: 309956199498 #redhat owenrID
+        filters:
+          architecture: x86_64
+          name: RHEL-8*HVM-*
+      register: amis
+
+    - name: display the amis output
+      debug:
+        var: amis
+
+
 
     
 
