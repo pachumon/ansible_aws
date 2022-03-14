@@ -2,5 +2,5 @@
 aws_id: 
 aws_key:
 aws_region: us-east-1
-ssh_keyname: ./controlnode_key.pem
+ssh_keyname: controlnode_key.pem
 remote_user: testuser
