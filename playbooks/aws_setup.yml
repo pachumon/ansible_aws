@@ -124,6 +124,14 @@
       debug:
         var: amis
 
+    - name: store latest version
+      set_fact: 
+        latest_ami: "{{ amis.images | sort(attribute='creation_date') | last }}"
+
+    - name: display the latest_ami
+      debug:
+        var: latest_ami
+
 
 
     
