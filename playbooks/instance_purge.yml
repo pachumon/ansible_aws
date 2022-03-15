@@ -9,18 +9,10 @@
     - ../../info.yml
 
   tasks:
-    - name: current Instance InstanceId
-      debug:
-        var: instance_id
-      
     - name: terminate ec2 instances
       hosts: localhost
       connection: local
       tasks:
-        - name: terminate ec2 instance {{ instance_id }}
-          ec2:
-            aws_access_key: "{{ aws_id }}"
-            aws_secret_key: "{{ aws_key }}"
-            region: "{{ aws_region }}"
-            state: "absent"
-            instance_id: "{{ instance_id }}"
+        - name: terminate ec2 instance
+          debug:
+            var: {{ aws_key }}
