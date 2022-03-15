@@ -11,7 +11,7 @@
   tasks:
     - name: current Instance InstanceId
       debug:
-        vars: instance_id
+        var: instance_id
       
     - name: terminate ec2 instance {{ instance_id }}
       ec2:
