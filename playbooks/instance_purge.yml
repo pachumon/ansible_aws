@@ -1,0 +1,14 @@
+---
+- name: playbook to prep networksetup for aws account
+  hosts: all
+  remote_user: testuser
+  gather_facts: true
+
+  vars_files:
+    #- ../vars/info.yml
+    - ../../info.yml
+
+  tasks:
+    - name: print out instance details
+      debug:
+        vars:  ansible_facts
