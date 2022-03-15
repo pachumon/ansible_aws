@@ -14,7 +14,7 @@
         var: instance_id
       
     - name: terminate ec2 instances
-      host: localhost
+      hosts: localhost
       connection: local
       tasks:
         - name: terminate ec2 instance {{ instance_id }}
